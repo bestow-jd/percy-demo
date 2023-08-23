@@ -78,11 +78,10 @@ jobs:
           run: npm run build
         - name: Start App
           run: |
-            npm run start:mocks &
+            npm run start &
             sleep 10 &&
             curl http://localhost:3000 &&
             yarn test
-            
         - name: Run Playwright tests
           run: npx playwright test
         - uses: actions/upload-artifact@v3
