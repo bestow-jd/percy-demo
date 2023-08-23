@@ -76,9 +76,6 @@ jobs:
           run: npx playwright install --with-deps
         - name: Start App
           run: npm run start:mocks
-          wait-on: http://localhost:8811
-          env:
-            PORT: 8811
         - name: Run Playwright tests
           run: npx playwright test
         - uses: actions/upload-artifact@v3
