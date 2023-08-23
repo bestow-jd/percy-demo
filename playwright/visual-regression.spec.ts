@@ -1,4 +1,4 @@
-// import percySnapshot from "@percy/playwright";
+import percySnapshot from "@percy/playwright";
 import { test } from "@playwright/test";
 
 test(`BLIC: Homepage Snapshot @dev @qa @vRegression`, async ({ page }) => {
