@@ -74,6 +74,8 @@ jobs:
           run: npm ci
         - name: Install Playwright Browsers
           run: npx playwright install --with-deps
+        - name: ⚙️ Build APp
+          run: npm run build
         - name: Start App
           run: npm run start:mocks
         - name: Run Playwright tests
