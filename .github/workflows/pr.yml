@@ -75,8 +75,8 @@ jobs:
         - name: Install Playwright Browsers
           run: npx playwright install --with-deps
         - name: Start App
-            start: npm run start:mocks
-            wait-on: http://localhost:8811
+          start: npm run start:mocks
+          wait-on: http://localhost:8811
           env:
             PORT: 8811
         - name: Run Playwright tests
