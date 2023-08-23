@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
+    "@percy/cli": "^1.26.1",
     "@percy/playwright": "^1.0.4",
     "@playwright/test": "^1.29.2",
     "@remix-run/dev": "^1.19.3",
