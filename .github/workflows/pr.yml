@@ -79,7 +79,7 @@ jobs:
             sleep 10 &&
             curl http://localhost:3000
         - name: Run Playwright tests
-          run: npx playwright test
+          run: npm run pw
         - uses: actions/upload-artifact@v3
           if: always()
           with:
