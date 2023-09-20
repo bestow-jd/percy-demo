@@ -12,8 +12,7 @@ permissions:
   contents: read
 
 jobs:
-
-  pw-test:
+  percy-PR:
       timeout-minutes: 60
       runs-on: ubuntu-latest
       steps:
