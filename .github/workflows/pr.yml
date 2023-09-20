@@ -1,0 +1,88 @@
+name: 🚀 PR CI 
+
+on: 
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  lint:
+    name: ⬣ ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          cache: npm
+          cache-dependency-path: ./package.json
+          node-version: 18
+
+      - name: 📥 Install deps
+        run: npm install
+
+      - name: 🔬 Lint
+        run: npm run lint
+
+  typecheck:
+    name: ʦ TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          cache: npm
+          cache-dependency-path: ./package.json
+          node-version: 18
+
+      - name: 📥 Install deps
+        run: npm install
+
+      - name: 🔎 Type check
+        run: npm run typecheck --if-present
+
+  pw-test:
+      timeout-minutes: 60
+      runs-on: ubuntu-latest
+      steps:
+        - name: ⬇️ Checkout repo
+          uses: actions/checkout@v3
+        - name: 🏄 Copy test env vars
+          run: cp .env.example .env
+        - name: ⎔ Setup node
+          uses: actions/setup-node@v3
+          with:
+            cache: npm
+            cache-dependency-path: ./package.json
+            node-version: 18
+
+        - name: 📥 Install deps
+          run: npm install
+        - name: 🖥️ Install Playwright Browsers
+          run: npx playwright install --with-deps
+        - name: ⚙️ Build App
+          run: npm run build
+        - name: 🔌 Start App
+          run: |
+            npm run start &
+            sleep 10 &&
+            curl http://localhost:3000
+        - name: 🏃‍♀️ Run Playwright tests
+          run: npm run pw
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: playwright-report
+            path: playwright-report/
+            retention-days: 30
